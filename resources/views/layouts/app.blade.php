@@ -1,31 +1,27 @@
 <!DOCTYPE html>
-<html
-    lang="en"
-    class="light-style layout-menu-fixed"
-    dir="ltr"
-    data-theme="theme-default"
-    data-template="vertical-menu-template-free"
-    >
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
+    data-template="vertical-menu-template-free">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Paradahan | @yield('page-title')</title>
 
-     <!-- Fonts -->
-     <link rel="preconnect" href="https://fonts.googleapis.com" />
-     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-     <link
-       href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-       rel="stylesheet"
-     />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet" />
 
-     <!-- Icons. Uncomment required icon fonts -->
+    <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/boxicons.css') }}" />
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/core.css') }}" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/theme-default.css') }}"
+        class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
 
     <!-- Vendors CSS -->
@@ -33,26 +29,46 @@
 
     @yield('page-style')
 
-     <!-- Helpers -->
-     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
+    <!-- Helpers -->
+    <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
 
-     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-     <script src="{{ asset('assets/js/config.js') }}"></script>
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="{{ asset('assets/js/config.js') }}"></script>
 
 
 </head>
+
 <body>
-       <!-- Layout wrapper -->
+    <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
             @include('components.sidebar')
 
             <div class="layout-page">
                 @include('components.navbar')
+
+                <div class="content-wrapper">
+                    <!-- Content -->
+
+                    <div class="container-xxl flex-grow-1 container-p-y">
+
+                        <div class="d-flex justify-content-between">
+                            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Paradahan /</span> @yield('page-title')</h4>
+                            @yield('page-action-button')
+                        </div>
+
+                        @yield('content')
+                    </div>
+                </div>
+
+                {{-- footer --}}
             </div>
         </div>
     </div>
+
+    {{-- Modals --}}
+    @yield('page-modals')
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
@@ -71,9 +87,9 @@
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
     <!-- Page JS -->
+    <script src="{{ asset('assets/js/ui-toasts.js') }}"></script>
     @yield('page-scripts')
-
-    <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
+
 </html>

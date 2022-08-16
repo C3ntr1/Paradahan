@@ -22,3 +22,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::prefix('garages')->as('garages.')->group(function() {
+    Route::get('/', ['App\Http\Controllers\GarageController', 'index'])->name('index');
+    Route::post('/', ['App\Http\Controllers\GarageController', 'store'])->name('store');
+    Route::get('{garage}', ['App\Http\Controllers\GarageController', 'show'])->name('show');
+    Route::post('{garage}', ['App\Http\Controllers\GarageController', 'update'])->name('update');
+    Route::post('{garage}/update-name', ['App\Http\Controllers\GarageController', 'updateName'])->name('updateName');
+    Route::delete('{garage}', ['App\Http\Controllers\GarageController', 'destroy'])->name('destroy');
+});
