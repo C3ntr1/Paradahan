@@ -15,4 +15,15 @@ class Slot extends Model
         'slot_type_id',
         'status',
     ];
+
+
+    public function garage()
+    {
+        return $this->belongsTo(Garage::class);
+    }
+
+    public function parking_log()
+    {
+        return $this->hasOne(ParkingLog::class);
+    }
 }

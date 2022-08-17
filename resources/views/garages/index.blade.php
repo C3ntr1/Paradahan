@@ -30,7 +30,11 @@
                                             onclick="cancelEditGarageTitle('editGarageNameInput_{{ $garage->id }}', 'garageTitle', '{{ $garage->id }}')">Cancel</button>
                                     </div>
                                 <div class="d-flex justify-content-between mb-3 " style="display: block">
-                                        <h5 class="card-title" id="garageTitleValue_{{ $garage->id }}">{{ $garage->name }}</h5>
+                                        <h5 class="card-title" id="garageTitleValue_{{ $garage->id }}">
+                                            <a href="{{ route('slots.index', $garage->id) }}">
+                                            {{ $garage->name }}
+                                            </a>
+                                        </h5>
                                         <div class="col-lg-3 col-sm-6 col-12 garageTitle">
                                             <div class="btn-group">
                                                 <button type="button"
@@ -46,10 +50,10 @@
                                         </div>
                                 </div>
                                 <ul>
-                                    <li>Occupied : #</li>
-                                    <li>Unoccupied : #</li>
+                                    <li>Occupied : <span class="text-bold">{{ $garage->occupied_slot }}</span></li>
+                                    <li>Unoccupied : <span class="text-bold">{{ $garage->unoccupied_slot }}</span></li>
                                 </ul>
-                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                <p class="card-text"><small class="text-muted">Last updated {{ $garage->updated_at->diffForHumans() }}</small></p>
                             </div>
                         </div>
                     </div>
