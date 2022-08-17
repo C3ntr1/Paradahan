@@ -30,7 +30,11 @@
                                             onclick="cancelEditGarageTitle('editGarageNameInput_{{ $garage->id }}', 'garageTitle', '{{ $garage->id }}')">Cancel</button>
                                     </div>
                                 <div class="d-flex justify-content-between mb-3 " style="display: block">
-                                        <h5 class="card-title" id="garageTitleValue_{{ $garage->id }}">{{ $garage->name }}</h5>
+                                        <h5 class="card-title" id="garageTitleValue_{{ $garage->id }}">
+                                            <a href="{{ route('slots.index', $garage->id) }}">
+                                            {{ $garage->name }}
+                                            </a>
+                                        </h5>
                                         <div class="col-lg-3 col-sm-6 col-12 garageTitle">
                                             <div class="btn-group">
                                                 <button type="button"
