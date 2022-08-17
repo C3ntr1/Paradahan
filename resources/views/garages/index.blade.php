@@ -46,10 +46,10 @@
                                         </div>
                                 </div>
                                 <ul>
-                                    <li>Occupied : #</li>
-                                    <li>Unoccupied : #</li>
+                                    <li>Occupied : <span class="text-bold">{{ $garage->occupied_slot }}</span></li>
+                                    <li>Unoccupied : <span class="text-bold">{{ $garage->unoccupied_slot }}</span></li>
                                 </ul>
-                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                <p class="card-text"><small class="text-muted">Last updated {{ $garage->updated_at->diffForHumans() }}</small></p>
                             </div>
                         </div>
                     </div>
