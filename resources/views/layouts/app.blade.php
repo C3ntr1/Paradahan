@@ -70,6 +70,77 @@
     {{-- Modals --}}
     @yield('page-modals')
 
+    {{-- Enter Vehicle --}}
+    <div class="modal fade" id="enterVehicleModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+
+            <form action="{{ route('parkings.checkVehicle') }}" enctype="multipart/form-data" method="GET">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel1">Enter Vehicle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="name" class="form-label">Plate No.</label>
+                                <input type="text" id="name" name="plate_no"
+                                    class="form-control @error('plate_no') is-invalid @enderror" placeholder="Enter Plate No." />
+                                @error('plate_no')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <button type="submit" class="btn btn-primary">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- Exit Vehicle --}}
+    <div class="modal fade" id="exitVehicleModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+
+            <form action="{{ route('parkings.checkVehicle') }}" enctype="multipart/form-data" method="GET">
+                <input type="hidden" name="for_exit" value="true">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel1">Exit Vehicle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="name" class="form-label">Plate No.</label>
+                                <input type="text" id="name" name="plate_no"
+                                    class="form-control @error('plate_no') is-invalid @enderror" placeholder="Enter Plate No." />
+                                @error('plate_no')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <button type="submit" class="btn btn-primary">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>

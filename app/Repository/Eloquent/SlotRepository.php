@@ -23,4 +23,18 @@ class SlotRepository extends BaseRepository implements EloquentRepositoryInterfa
         ->latest()
         ->paginate($paginate);
     }
+
+    public function getVacantSlot($garage_id, $type)
+    {
+        $slot = $this->model
+        ->where([['status', true], ['garage_id', $garage_id]])
+        ->whereHas('slot_type', function($query) use ($type){
+            $query->where('name', $type);
+        })->first();
+
+        $slot->status = false;
+        $slot->save();
+
+        return $slot;
+    }
 }
