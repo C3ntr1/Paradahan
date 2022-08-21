@@ -26,26 +26,37 @@ class ParkingLogController extends Controller
 
     public function index()
     {
-        // return $this->parkingLogRepository->all();
-
-        return view('parkings.index');
+        $parking_logs =  $this->parkingLogRepository->queryBuidler();
+        return view('parkings.index', compact('parking_logs'));
     }
     public function enter(EnterRequest $request)
     {
         try {
             \DB::beginTransaction();
 
-            // Check the plate_no if it had alerady park within 1 hr  time frame
-            // Make it continues time from the time the vehicle exit into this new exit
-            // make it regular if has no prev record or not within the 1 hr time frame
+            $slot = $this->slotRepository->getVacantSlot($request->garage_id, $request->type);
 
-            $slot_id = $this->slotRepository->getVacantSlot($request->garage_id, $request->type)->id;
-            $customer_id = $this->customerRepository->create($request->validated())->id;
+            if (!$slot) {
+                \DB::rollback();
+                return view('parkings.not_available_slot');
+            }
+
+            $customer = $this->customerRepository->checkVehicleExist($request->plate_number);
+
+            if (!$customer) {
+                $customer = $this->customerRepository->create($request->validated());
+            }
+
+            if ($request->parking_type === 'Regular Rate') {
+                $enter_at = now();
+            } else {
+                $enter_at = $this->parkingLogRepository->getVehicle($request->plate_number)->exit_at;  // get the last exit on previous parking log
+            }
 
             $data = [
-                'slot_id' => $slot_id,
-                'customer_id' => $customer_id,
-                'enter_at' => now(),
+                'slot_id' => $slot->id,
+                'customer_id' => $customer->id,
+                'enter_at' => $enter_at,
             ];
             $this->parkingLogRepository->create($data);
 
@@ -54,35 +65,66 @@ class ParkingLogController extends Controller
             return redirect()->route('parkings.index');
 
         } catch (\Throwable $th) {
+            \DB::rollback();
             return $th->getMessage();
         }
     }
 
     public function exit(Request $request)
     {
-        $vehicle = $this->parkingLogRepository->getVehicle($request->plate_no);
-        $exit_data = $this->parkingLogRepository->exitVehicle($vehicle);
-        $fee = $this->parkingLogRepository->computeFee($vehicle, $exit_data->exit_at);
-        // make Condfirmation Page
-        return [
-            'exit_data' => $exit_data,
-            'fee'   => $fee
-        ];
+        try {
+            \DB::beginTransaction();
+
+            $plate_no = $request->plate_no;
+            $parking_type = $request->parking_type;
+
+            $vehicle = $this->parkingLogRepository->getVehicle($plate_no);
+            $exit_data = $this->parkingLogRepository->exitVehicle($vehicle);
+            $fee = $this->parkingLogRepository->computeFee($vehicle, $parking_type, $exit_data->exit_at);
+
+            // \DB::commit();
+
+            return view('parkings.complete', compact('exit_data', 'fee'));
+
+            return [
+                'exit_data' => $exit_data,
+                'fee'   => $fee
+            ];
+
+        } catch (\Throwable $th) {
+            \DB::rollback();
+            return $th->getMessage();
+        }
     }
 
     public function checkVehicle(Request $request)
     {
         try {
-        $plate_no = $request->plate_no;
-        $vehicle = $this->parkingLogRepository->getVehicle($request->plate_no);
-        $garages = App::make(Garage::class)->all();
+            $plate_no = $request->plate_no;
+            $rate_type = $request->rate_type;
 
-        if ($request->has('for_exit') || $vehicle != null) {
-            $fee = $this->parkingLogRepository->computeFee($vehicle);
-            return view('parkings.exit', compact('vehicle', 'garages', 'plate_no', 'fee'));
-        }
+            $garages = App::make(Garage::class)->all();
+            $parking_type = $this->parkingLogRepository->checkParkingType($plate_no);
 
-        return view('parkings.enter', compact('vehicle', 'garages', 'plate_no'));
+
+            if ($request->has('for_exit')) {
+                $vehicle = $this->parkingLogRepository->getVehicleEntered($plate_no);
+                if (!$vehicle) {
+                    return view('parkings.not_found');
+                }
+                $fee = $this->parkingLogRepository->computeFee($vehicle, $parking_type);
+                return view('parkings.exit', compact('vehicle', 'garages', 'plate_no', 'fee', 'parking_type'));
+            }
+
+            $vehicle = $this->parkingLogRepository->getVehicle($plate_no);
+
+            if ($vehicle) {
+                if ($vehicle->exit_at == null) {
+                    return view('parkings.already_parked', compact('vehicle'));
+                }
+            }
+
+            return view('parkings.enter', compact('vehicle', 'garages', 'plate_no' ,'parking_type'));
         } catch (\Throwable $th) {
             return $th->getMessage();
         }

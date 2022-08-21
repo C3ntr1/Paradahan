@@ -32,7 +32,7 @@ class GarageController extends Controller
             }
 
             if($request->md > 0){
-                $this->garageRepository->addSlot($garage, 'Meduim', $request->md);
+                $this->garageRepository->addSlot($garage, 'Medium', $request->md);
             }
 
             if($request->sm > 0){

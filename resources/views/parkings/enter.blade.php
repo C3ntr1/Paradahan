@@ -16,6 +16,11 @@
                             <label for="plate_number" class="form-label">Plate No.</label>
                             <h4 id="plate_no_value">{{ $plate_no }}</h4>
                             <input type="hidden" name="plate_number" value="{{ $plate_no }}">
+                            <input type="hidden" name="parking_type" value="{{ $parking_type === 'Continuous Rate' ? 'Continuous Rate' : 'Regular Rate' }}">
+                        </div>
+                        <div class="col-6">
+                            <label for="plate_number" class="form-label">Parking Type</label>
+                            <h4 id="plate_no_value" class="text-success">{{ $parking_type === 'Continuous Rate' ? 'Continuous Rate' : 'Regular Rate' }}</h4>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -66,8 +71,7 @@
                             <select name="garage_id" id="garage_id" class="form-control">
                                 <option value="">-- Select Garage --</option>
                                 @foreach ($garages as $garage)
-                                    <option value="{{ $garage->id }}"
-                                        {{ $vehicle ? ($vehicle->slot->garage_id === $garage->id ? 'selected' : '') : '' }}>
+                                    <option value="{{ $garage->id }}">
                                         {{ $garage->name }}</option>
                                 @endforeach
                             </select>

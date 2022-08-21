@@ -27,6 +27,14 @@
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
+                        @foreach ($parking_logs as $parking_log)
+                            <tr>
+                                <td>{{ $parking_log->customer->plate_number }}</td>
+                                <td>{{ $parking_log->slot->garage->name }}</td>
+                                <td>{{ $parking_log->slot->name }}</td>
+                                <td>Action</td>
+                            </tr>
+                        @endforeach
                     </tbody>
 
                 </table>

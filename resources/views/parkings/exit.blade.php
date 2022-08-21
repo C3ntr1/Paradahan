@@ -82,7 +82,7 @@
                     </div>
                     <div class="col-6">
                         <label for="name" class="form-label">About</label>
-                        <h4 id="plate_no_value" class="text-success">{{ $vehicle->created_at->diffForHumans() }}</h4>
+                        <h4 id="plate_no_value" class="text-success">{{ $vehicle->enter_at->diffForHumans() }}</h4>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -96,7 +96,10 @@
                         <a href="{{ route('parkings.index') }}" class="btn btn-secondary">Got to List</a>
                         <button type="button" onclick="confirmDelete()" class="btn btn-danger">Exit</button>
                         <form id="exitVehicleFrm"
-                            action="{{ route('parkings.exit', ['plate_no' => $plate_no]) }}"
+                            action="{{ route('parkings.exit', [
+                                        'plate_no' => $plate_no,
+                                        'parking_type' => $parking_type === 'Continuous Rate' ? 'Continuous Rate' : 'Regular Rate'
+                                    ]) }}"
                             method="POST">
                             @csrf
                         </form>

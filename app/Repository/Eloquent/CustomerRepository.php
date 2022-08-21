@@ -12,4 +12,9 @@ class CustomerRepository extends BaseRepository implements EloquentRepositoryInt
         $this->model = $customer;
     }
 
+    public function checkVehicleExist($plate_no)
+    {
+        return $this->model->where('plate_number', $plate_no)->first();
+    }
+
 }
