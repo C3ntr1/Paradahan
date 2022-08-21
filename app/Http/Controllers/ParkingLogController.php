@@ -82,14 +82,9 @@ class ParkingLogController extends Controller
             $exit_data = $this->parkingLogRepository->exitVehicle($vehicle);
             $fee = $this->parkingLogRepository->computeFee($vehicle, $parking_type, $exit_data->exit_at);
 
-            // \DB::commit();
+            \DB::commit();
 
             return view('parkings.complete', compact('exit_data', 'fee'));
-
-            return [
-                'exit_data' => $exit_data,
-                'fee'   => $fee
-            ];
 
         } catch (\Throwable $th) {
             \DB::rollback();

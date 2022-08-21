@@ -32,13 +32,25 @@
                                 <td>{{ $parking_log->customer->plate_number }}</td>
                                 <td>{{ $parking_log->slot->garage->name }}</td>
                                 <td>{{ $parking_log->slot->name }}</td>
-                                <td>Action</td>
+                                <td>
+                                    <a
+                                    href="{{ route('parkings.checkVehicle', ['for_exit' => true, 'plate_no' => $parking_log->customer->plate_number ]) }}"
+                                    class="btn btn-danger"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-offset="0,4"
+                                    data-bs-placement="right"
+                                    data-bs-html="true"
+                                    title="<i class='bx bx-trending-up bx-xs' ></i> <span>Exit this vehicle</span>">
+                                        <i class='bx bxs-right-arrow-circle'></i>
+                                    </a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
 
                 </table>
                 <div class="d-flex justify-content-end">
+                    {{ $parking_logs->links() }}
                 </div>
             </div>
         </div>
