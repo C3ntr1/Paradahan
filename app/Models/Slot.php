@@ -26,4 +26,9 @@ class Slot extends Model
     {
         return $this->hasOne(ParkingLog::class);
     }
+
+    public function slot_type()
+    {
+        return $this->belongsTo(SlotType::class);
+    }
 }

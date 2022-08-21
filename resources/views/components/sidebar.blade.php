@@ -78,19 +78,19 @@
             <span class="menu-header-text">Park Management</span>
         </li>
         <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="{{ route('parkings.index') }}" class="menu-link">
               <i class="menu-icon tf-icons bx bx-dock-top"></i>
               <div data-i18n="Account Settings">Vehicles</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="#" class="menu-link" data-bs-toggle="modal" data-bs-target="#enterVehicleModal">
               <i class="menu-icon tf-icons bx bx-dock-top"></i>
               <div data-i18n="Account Settings">Enter Vehicle</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="#" class="menu-link" data-bs-toggle="modal" data-bs-target="#exitVehicleModal">
               <i class="menu-icon tf-icons bx bx-dock-top"></i>
               <div data-i18n="Account Settings">Exit Vehicle</div>
             </a>

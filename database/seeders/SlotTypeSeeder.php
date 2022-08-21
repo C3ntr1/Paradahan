@@ -18,7 +18,7 @@ class SlotTypeSeeder extends Seeder
     {
         $sizes = [
             'Small' => '20',
-            'Meduim' => '60',
+            'Medium' => '60',
             'Large' => '100'
         ];
 

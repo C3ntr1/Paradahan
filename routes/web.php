@@ -39,3 +39,14 @@ Route::prefix('slots')->as('slots.')->group(function() {
     Route::post('{slot}', ['App\Http\Controllers\SlotController', 'update'])->name('update');
     Route::delete('{slot}', ['App\Http\Controllers\SlotController', 'destroy'])->name('destroy');
 });
+
+
+Route::prefix('parkings')->as('parkings.')->group(function() {
+    Route::get('/', ['App\Http\Controllers\ParkingLogController', 'index'])->name('index');
+
+    Route::get('/enter-form', ['App\Http\Controllers\ParkingLogController', 'checkVehicle'])->name('checkVehicle');
+    Route::post('/enter', ['App\Http\Controllers\ParkingLogController', 'enter'])->name('enter');
+
+    Route::get('/exit', ['App\Http\Controllers\ParkingLogController', 'exitPage'])->name('exitPage');
+    Route::post('/exit', ['App\Http\Controllers\ParkingLogController', 'exit'])->name('exit');
+});
