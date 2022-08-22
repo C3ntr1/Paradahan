@@ -38,6 +38,9 @@ class EnterRequest extends FormRequest
             ],
             'type' => [
                 'required',
+            ],
+            'garage_id' => [
+                'required',
             ]
         ];
     }
