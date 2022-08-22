@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-6">
                             <label for="mobile_number" class="form-label">Mobile No</label>
-                            <input type="text" id="name" name="mobile_number"
+                            <input type="text" id="mobile_number" name="mobile_number"
                                 class="form-control @error('mobile_number') is-invalid @enderror"
                                 placeholder="Enter Mobile No."
                                 value="{{ old('mobile_number', $vehicle ? $vehicle->customer->mobile_number : '') }}" />
@@ -51,8 +51,8 @@
                     <div class="row mb-3">
 
                         <div class="col-6">
-                            <label for="name" class="form-label">Vehicle Type</label>
-                            <select name="type" id="type" class="form-control">
+                            <label for="type" class="form-label">Vehicle Type</label>
+                            <select name="type" id="type" class="form-control @error('type') is-invalid @enderror">
                                 <option value="">-- Select Vehicle Type --</option>
                                 <option value="Small"
                                     {{ $vehicle ? ($vehicle->customer->type === 'Small' ? 'selected' : '') : '' }}>Small
@@ -64,17 +64,27 @@
                                     {{ $vehicle ? ($vehicle->customer->type === 'Large' ? 'selected' : '') : '' }}>Large
                                 </option>
                             </select>
+                            @error('type')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
 
                         <div class="col-6">
-                            <label for="name" class="form-label">Garage</label>
-                            <select name="garage_id" id="garage_id" class="form-control">
+                            <label for="garage_id" class="form-label">Garage</label>
+                            <select name="garage_id" id="garage_id" class="form-control @error('garage_id') is-invalid @enderror">
                                 <option value="">-- Select Garage --</option>
                                 @foreach ($garages as $garage)
                                     <option value="{{ $garage->id }}">
                                         {{ $garage->name }}</option>
                                 @endforeach
                             </select>
+                            @error('garage_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
                     <div class="d-flex justify-content-end just">
