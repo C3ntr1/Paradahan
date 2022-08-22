@@ -117,7 +117,7 @@
                         <div class="row mb-3">
                             <div class="d-flex">
                                 <h4 for="" class="col-sm-4 form-label">Meduim Vehicle</h4>
-                                <div class="col-sm-4"><input type="text" min="1" max="500"
+                                <div class="col-sm-4"><input type="number" min="1" max="500"
                                         class="form-control @error('md') is-invalid @enderror" name="md" /></div>
                                 @error('md')
                                     <span class="invalid-feedback" role="alert">
@@ -129,7 +129,7 @@
                         <div class="row mb-3">
                             <div class="d-flex">
                                 <h4 for="" class="col-sm-4 form-label">Small Vehicle</h4>
-                                <div class="col-sm-4"><input type="text" min="10" max="500"
+                                <div class="col-sm-4"><input type="number" min="10" max="500"
                                         class="form-control @error('sm') is-invalid @enderror" name="sm" /></div>
                                 @error('sm')
                                     <span class="invalid-feedback" role="alert">

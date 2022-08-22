@@ -10,7 +10,7 @@
         <!-- Search -->
         <div class="navbar-nav align-items-center">
             <div class="nav-item d-flex align-items-center">
-                Date & Time : July 9, 2022 10:00 AM
+                {{ date("l, F j, Y") }}&nbsp;|&nbsp;<span class="digital-clock mx-2" style="font-weight: bold;">
             </div>
         </div>
         <!-- /Search -->
