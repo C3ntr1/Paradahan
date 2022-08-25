@@ -8,12 +8,14 @@ use App\Models\ParkingLog;
 use App\Repository\Eloquent\CustomerRepository;
 use App\Repository\Eloquent\ParkingLogRepository;
 use App\Repository\Eloquent\SlotRepository;
+use App\Repository\Eloquent\TransactionRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
 class ParkingLogController extends Controller
 {
     public function __construct(
+        private TransactionRepository $transactionRepository,
         private ParkingLogRepository $parkingLogRepository,
         private CustomerRepository $customerRepository,
         private SlotRepository $slotRepository,
@@ -22,6 +24,7 @@ class ParkingLogController extends Controller
         $this->parkingLogRepository = $parkingLogRepository;
         $this->customerRepository = $customerRepository;
         $this->slotRepository = $slotRepository;
+        $this->transactionRepository = $transactionRepository;
     }
 
     public function index()
@@ -81,6 +84,14 @@ class ParkingLogController extends Controller
             $vehicle = $this->parkingLogRepository->getVehicle($plate_no);
             $exit_data = $this->parkingLogRepository->exitVehicle($vehicle);
             $fee = $this->parkingLogRepository->computeFee($vehicle, $parking_type, $exit_data->exit_at);
+
+            $data = [
+                'customer_id' => $vehicle->customer->id,
+                'parking_log_id' => $vehicle->id,
+                'fees' => $fee,
+            ];
+
+            $this->transactionRepository->create($data);
 
             \DB::commit();
 
